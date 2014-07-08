@@ -12,15 +12,19 @@
     ~(first form)
     ~(nth form 2)))
 
+(drop 2 '(1 2 3 4 ))
+
 (defmacro r-infix [form]
   (cond (not (seq? form))
         form
+
         (= 1 (count form))
         `(r-infix ~(first form))
+
         :else
         (let [operator (second form)
               first-arg (first form)
-              others __]
+              others (drop 2 form)]
           `(~operator
             (r-infix ~first-arg)
             (r-infix ~others)))))
